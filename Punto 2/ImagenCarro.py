@@ -1,20 +1,45 @@
 # Import OpenCV module
 import cv2
-import numpy as np
 
-def identifyColor(plane):
-    
-    mean=0.0
-    for row in plane:
-        for p in row:    
-            mean+=p
-    
-
-    
-    print(f'Mean of plane is: {mean/(dims[0]*dims[1])}')
-    return 00
+def identifyColor(img):
+    dims=img.shape
+    bluePlane = img[:,:,0]
+    greenPlane = img[:,:,1]
+    redPlane = img[:,:,2]
+    redplanemean = 0
+    blueplanemean = 0
+    greenplanemean = 0
+    for i in range(3):
+        mean = 0.0
+        if i == 0:
+            plane = redPlane
+            for row in plane:
+                for p in row:    
+                    mean+=p
+            print(f'Mean of red plane is: {mean/(dims[0]*dims[1])}')
+            redplanemean += mean/(dims[0]*dims[1])
+        if i == 1:
+            plane = bluePlane
+            for row in plane:
+                for p in row:
+                    mean += p
+            print(f'Mean of blue plane is: {mean/(dims[0]*dims[1])}')
+            blueplanemean += mean/(dims[0]*dims[1])
+        if i == 2:
+            plane = greenPlane
+            for row in plane:
+                for p in row:
+                    mean += p
+            print(f'Mean of green plane is: {mean/(dims[0]*dims[1])}')
+            greenplanemean += mean/(dims[0]*dims[1])
+    if blueplanemean > redplanemean and blueplanemean > greenplanemean:
+        color = "Blue"
+    elif redplanemean > blueplanemean and redplanemean > greenplanemean:
+        color = "Red"
+    else:
+        color = "Green or Yellow"
+    return color
 # Read image
-#img = cv2.imread("C:/Users/Joseph/Documents/Laboratorio 1/blue_car.jfif", cv2.IMREAD_COLOR)
 img = cv2.imread("Laboratorio 1/blue_car.jfif", cv2.IMREAD_COLOR)
 
 # Get image dimensions
@@ -34,34 +59,8 @@ cv2.imshow("Blue plane", bluePlane)
 cv2.imshow("Green plane", greenPlane)
 cv2.imshow("Red plane", redPlane)
 
-for i in range(3):
-    if i == 0:
-        plane = redPlane
-    if i == 2:
-        plane == bluePlane
-    if i == 3:
-        plane == greenPlane
-plane = greenPlane
-
-dims = plane.shape
-print(f'Plane has {dims[0]} rows and {dims[1]} columns')
-
-# Compute mean of red plane by looping through image (version 1)
-mean=0.0
-for i in range(dims[0]):
-    for j in range(dims[1]):
-        mean+=plane[i][j]
-        
-print(f'Mean of plane is: {mean/(dims[0]*dims[1])}')
-
-
-# Compute mean of red plane by looping through image (version 2)
-mean=0.0
-for row in plane:
-    for p in row:    
-        mean+=p
-        
-print(f'Mean of plane is: {mean/(dims[0]*dims[1])}')
+# Identify the image's color
+color = print(f"The color of the image is: {identifyColor(img)}")
 
 # Wait for key
 cv2.waitKey()
