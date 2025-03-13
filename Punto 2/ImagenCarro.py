@@ -2,10 +2,13 @@
 import cv2
 
 def identifyColor(img):
+    # Get image shape
     dims=img.shape
+    # Get the planes for the image. ":" implies slice operations in the matrix 
     bluePlane = img[:,:,0]
     greenPlane = img[:,:,1]
     redPlane = img[:,:,2]
+    # Initialize the means for each color plane
     redplanemean = 0
     blueplanemean = 0
     greenplanemean = 0
@@ -32,6 +35,7 @@ def identifyColor(img):
                     mean += p
             print(f'Mean of green plane is: {mean/(dims[0]*dims[1])}')
             greenplanemean += mean/(dims[0]*dims[1])
+    # Identify the image's color by comparing every mean of every color
     if blueplanemean > redplanemean and blueplanemean > greenplanemean:
         color = "Blue"
     elif redplanemean > blueplanemean and redplanemean > greenplanemean:
@@ -42,7 +46,8 @@ def identifyColor(img):
         color = "Green or Yellow"
     return color
 
-imgpath = str(input("Ingrese el nombre y ruta relativa de la imagen, incluyendo la extensión de la misma: "))
+# Ask for the image path
+imgpath = str(input("Input the name and relative route of the image, including the file extension: "))
 
 # Read image
 img = cv2.imread(imgpath, cv2.IMREAD_COLOR)
