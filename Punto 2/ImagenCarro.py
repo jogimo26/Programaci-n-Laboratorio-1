@@ -39,8 +39,11 @@ def identifyColor(img):
     else:
         color = "Green or Yellow"
     return color
+
+imgpath = str(input("Ingrese el nombre y ruta relativa de la imagen, incluyendo la extensión de la misma: "))
+
 # Read image
-img = cv2.imread("Laboratorio 1/blue_car.jfif", cv2.IMREAD_COLOR)
+img = cv2.imread(imgpath, cv2.IMREAD_COLOR)
 
 # Get image dimensions
 dims=img.shape
