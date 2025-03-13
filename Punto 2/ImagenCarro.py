@@ -36,6 +36,8 @@ def identifyColor(img):
         color = "Blue"
     elif redplanemean > blueplanemean and redplanemean > greenplanemean:
         color = "Red"
+    elif redplanemean == blueplanemean and blueplanemean == greenplanemean:
+        color = "Grayscale"
     else:
         color = "Green or Yellow"
     return color
