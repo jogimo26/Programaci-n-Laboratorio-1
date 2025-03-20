@@ -1,27 +1,29 @@
 import cv2
 import numpy as np
 
-# Función para verificar si el parqueo está ocupado
-def identifySpot(path, reference):
-    image = cv2.imread(path, cv2.IMREAD_GRAYSCALE)  # Carga una imagen en escala de grises
-    reference_image = cv2.imread(reference, cv2.IMREAD_GRAYSCALE)  # Carga la  imagen de referencia
+ref_bordes = 965  # Este es el valor de referencia que sacamos previamente de la imagen del parqueadero vacío
 
- # Encuentra los bordes en la imagen que colocara el usuario
-    edges = cv2.Canny(image, 100, 200) 
- # Bordes en la imagen de parqueadero vacio
-    reference_edges = cv2.Canny(reference_image, 100, 200) 
- # Cuenta cuántos bordes tiene
-    bordes = np.sum(edges)
-    bordes_ref = np.sum(reference_edges)
-    
-# Comparara los bordes con la imagen que dio los bordes de referencia y esta dira si esta o cupado o disponible
-    if bordes > bordes_ref:
+# Función para verificar si el parqueo está ocupado
+def identifySpot(path):
+    image = cv2.imread(path, cv2.IMREAD_GRAYSCALE)  # Cargamos la imagen que ingresa el usuario en escala de grises
+
+    # Aplicamos el detector de bordes Canny sobre la imagen
+    # Los valores 100 y 200 son los umbrales inferior y superior que nos ayudan a definir los bordes detectados
+    edges = cv2.Canny(image, 100, 200)  
+
+    # Contamos la cantidad total de bordes que tiene la imagen ingresada
+    bordes = np.sum(edges) / 255
+    print("Cantidad de bordes en la imagen ingresada:", bordes)
+
+    # Comparamos la cantidad de bordes detectados con el valor de referencia que habíamos calculado antes
+    # Si es mayor que el valor de referencia, entonces consideramos que está ocupado
+    if bordes > ref_bordes:
         return "Ocupado"
     else:
         return "Disponible"
 
-# Pide la imagen al usuario
+# Pedimos la imagen al usuario
 path = input("Ingrese el nombre de la imagen: ")
-reference = "empty.jfif"  #esta es la imagen de parqueo donde esta vacio, esta se toma de refrencia para las otras imagenes
-# Muestra el resultado
-print("El puesto de parqueo está:", identifySpot(path, reference))
+
+# Mostramos el resultado final, indicando si el puesto de parqueo está ocupado o disponible
+print("El puesto de parqueo está:", identifySpot(path))
