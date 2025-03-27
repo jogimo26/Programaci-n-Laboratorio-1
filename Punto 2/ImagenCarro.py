@@ -1,76 +1,77 @@
-# Import OpenCV module
+# Importar módulo de OpenCV
 import cv2
 
 def identifyColor(img):
-    # Get image shape
-    dims=img.shape
-    # Get the planes for the image. ":" implies slice operations in the matrix 
+    # Obtener forma de la imagen
+    dims = img.shape
+    # Obtener los planos de color para la imagen. ":" implica opperaciones de "slice" en la matriz
     bluePlane = img[:,:,0]
     greenPlane = img[:,:,1]
     redPlane = img[:,:,2]
-    # Initialize the means for each color plane
+    # Inicializar las medias para cada plano de color
     redplanemean = 0
     blueplanemean = 0
     greenplanemean = 0
+    # Encontrar las medias de cada plano por medio del siguiente bucle for
     for i in range(3):
         mean = 0.0
-        if i == 0:
+        if i == 0: # Plano de color rojo
             plane = redPlane
             for row in plane:
                 for p in row:    
                     mean+=p
-            print(f'Mean of red plane is: {mean/(dims[0]*dims[1])}')
+            print(f'Media del plano rojo: {mean/(dims[0]*dims[1])}')
             redplanemean += mean/(dims[0]*dims[1])
-        if i == 1:
+        if i == 1: # Plano de color azul
             plane = bluePlane
             for row in plane:
                 for p in row:
                     mean += p
-            print(f'Mean of blue plane is: {mean/(dims[0]*dims[1])}')
+            print(f'Media del plano azul: {mean/(dims[0]*dims[1])}')
             blueplanemean += mean/(dims[0]*dims[1])
-        if i == 2:
+        if i == 2: # Plano de color verde
             plane = greenPlane
             for row in plane:
                 for p in row:
                     mean += p
-            print(f'Mean of green plane is: {mean/(dims[0]*dims[1])}')
+            print(f'Media del plano verde: {mean/(dims[0]*dims[1])}')
             greenplanemean += mean/(dims[0]*dims[1])
-    # Identify the image's color by comparing every mean of every color
+    # Identificar el color de la imagen por medio de la comparación de cada media de cada plano de color
     if blueplanemean > redplanemean and blueplanemean > greenplanemean:
-        color = "Blue"
+        color = "Azul"
     elif redplanemean > blueplanemean and redplanemean > greenplanemean:
-        color = "Red"
+        color = "Verde"
     elif redplanemean == blueplanemean and blueplanemean == greenplanemean:
-        color = "Grayscale"
+        color = "Escala de grises"
     else:
-        color = "Green or Yellow"
+        color = "Verde o Amarillo"
     return color
 
-# Ask for the image path
-imgpath = str(input("Input the name and relative route of the image, including the file extension: "))
+# Preguntar por la ruta de la imagen
+imgpath = str(input("Ingrese el nombre y ruta relativa de la imagen, incluyendo la extensión de archivo: "))
 
-# Read image
+# Leer imagen
 img = cv2.imread(imgpath, cv2.IMREAD_COLOR)
 
-# Get image dimensions
-dims=img.shape
+# Obtener dimensiones de la imagen
+dims = img.shape
 
-# Show image dimensions
-print(f'Image has {dims[2]} color planes each having {dims[0]} rows and {dims[1]} columns')
+# Mostrar dimensiones de la imagen
+print(f'La imagen tiene {dims[2]} planos de color, cada uno teniendo {dims[0]} filas y {dims[1]} columnas')
 
-# Get matrix for each color plane
+# Obtener la matriz para cada plano de color
 bluePlane = img[:,:,0]
 greenPlane = img[:,:,1]
 redPlane = img[:,:,2]
 
-# Show image and each color plane
-cv2.imshow("image", img)
-cv2.imshow("Blue plane", bluePlane)
-cv2.imshow("Green plane", greenPlane)
-cv2.imshow("Red plane", redPlane)
+# Mostrar imagen y cada plano de color
+cv2.imshow("Imagen", img)
+cv2.imshow("Plano azul", bluePlane)
+cv2.imshow("Plano verde", greenPlane)
+cv2.imshow("Plano rojo", redPlane)
 
-# Identify the image's color
-color = print(f"The color of the image is: {identifyColor(img)}")
+# Identificar el color de la imagen
+color = print(f"El color de la imagen es: {identifyColor(img)}")
 
-# Wait for key
+# Esperar a que el usuario presione una tecla
 cv2.waitKey()
