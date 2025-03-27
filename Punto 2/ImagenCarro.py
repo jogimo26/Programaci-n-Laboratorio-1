@@ -2,6 +2,8 @@
 import cv2
 
 def identifyColor(img):
+    #Ver si existe la imagen
+    assert image is not None, "La imagen no es legible / No existe"
     # Obtener forma de la imagen
     dims = img.shape
     # Obtener los planos de color para la imagen. ":" implica opperaciones de "slice" en la matriz
