@@ -6,7 +6,7 @@ ref_bordes = 965  # Este es el valor de referencia que sacamos previamente de la
 # Función para verificar si el parqueo está ocupado
 def identifySpot(path):
     image = cv2.imread(path, cv2.IMREAD_GRAYSCALE)  # Cargamos la imagen que ingresa el usuario en escala de grises
-    assert image is not None, "The image does not exist"
+    assert image is not None, "La imagen no existe/no es legible"
 
     # Aplicamos el detector de bordes Canny sobre la imagen
     # Los valores 100 y 200 son los umbrales inferior y superior que nos ayudan a definir los bordes detectados
