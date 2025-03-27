@@ -1,27 +1,33 @@
-# pip install opencv-python
-import cv2
+import cv2  
+import numpy as np  
 
-# Open the default camera
-cam = cv2.VideoCapture(0,cv2.CAP_DSHOW)
+ref_bordes = 965  
 
-# Get the default frame width and height
-frame_width = int(cam.get(cv2.CAP_PROP_FRAME_WIDTH))
-frame_height = int(cam.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
+def identifySpot(image):
+    assert image is not None
+    edges = cv2.Canny(image, 100, 200) 
+    bordes = np.sum(edges) / 255 
+    print("Cantidad de bordes:", bordes)  
+
+    if bordes > ref_bordes:  
+        return "Ocupado"
+    else:  
+        return "Disponible"
+
+camara = cv2.VideoCapture(0)  # Activa la cámara
 
 while True:
-    # Read frame from camera
-    ret, frame = cam.read()
+    _, imagen = camara.read()  # Captura la imagen
+    cv2.imshow("parqueadero", imagen)  # Muestra lo que ve la cámara
 
-    #print(len(frame))
+    tecla = cv2.waitKey(1)  # Espera una tecla
 
-    # Display the captured frame after flipping
-    cv2.imshow('Parking Lot Camera', cv2.flip(frame,1))
-    # Wait for 10ms and exit if any key is pressed
-    if cv2.waitKey(10) != -1:
+    if tecla == 27:  # Si presiona ESC, cierra todo
         break
-    
+    elif tecla == 32:  # Si presiona ESPACIO, analiza la imagen
+        estado = identifySpot(imagen)  # Verifica si el puesto está ocupado
+        print("El puesto está:", estado)  # Muestra el resultado
 
-# Release the capture object
-cam.release()
+camara.release()  
 cv2.destroyAllWindows()
