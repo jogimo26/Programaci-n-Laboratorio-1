@@ -56,6 +56,9 @@ def identifyColor(img):
 # Preguntar por la ruta de la imagen
 imgpath = str(input("Ingrese el nombre y ruta relativa de la imagen, incluyendo la extensión de archivo: "))
 
+#Ver si la imagen existe
+assert image is not None, "La imagen no es legible / No existe"
+
 # Leer imagen
 img = cv2.imread(imgpath, cv2.IMREAD_COLOR)
 
