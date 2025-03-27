@@ -43,8 +43,12 @@ def identifyColor(img):
         color = "Rojo"
     elif redplanemean == blueplanemean and blueplanemean == greenplanemean:
         color = "Escala de grises"
+    elif greenplanemean > blueplanemean and greenplanemean > redplanemean:
+        color = "Verde"
+    elif greenplanemean > redplanemean and redplanemean > blueplanemean:
+        color = "Amarillo"
     else:
-        color = "Verde o Amarillo"
+        color = "Otro"
     return color
 
 # Preguntar por la ruta de la imagen
