@@ -5,7 +5,7 @@ ref_bordes = 965
 
 
 def identifySpot(image):
-    assert image is not None
+    assert image is not None, "La imagen no es legible / No existe"
     edges = cv2.Canny(image, 100, 200) 
     bordes = np.sum(edges) / 255 
     print("Cantidad de bordes:", bordes)  
