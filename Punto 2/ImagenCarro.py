@@ -3,7 +3,7 @@ import cv2
 
 def identifyColor(img):
     #Ver si existe la imagen
-    assert image is not None, "La imagen no es legible / No existe"
+    assert img is not None, "La imagen no es legible / No existe"
     # Obtener forma de la imagen
     dims = img.shape
     # Obtener los planos de color para la imagen. ":" implica opperaciones de "slice" en la matriz
@@ -56,11 +56,11 @@ def identifyColor(img):
 # Preguntar por la ruta de la imagen
 imgpath = str(input("Ingrese el nombre y ruta relativa de la imagen, incluyendo la extensión de archivo: "))
 
-#Ver si la imagen existe
-assert image is not None, "La imagen no es legible / No existe"
-
 # Leer imagen
 img = cv2.imread(imgpath, cv2.IMREAD_COLOR)
+
+#Ver si la imagen existe
+assert img is not None, "La imagen no es legible / No existe"
 
 # Obtener dimensiones de la imagen
 dims = img.shape
