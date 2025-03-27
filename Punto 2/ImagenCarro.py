@@ -10,11 +10,11 @@ def identifyColor(img):
     bluePlane = img[:,:,0]
     greenPlane = img[:,:,1]
     redPlane = img[:,:,2]
-    # Inicializar las medias para cada plano de color
+    # Inicializar el promedio para cada plano de color
     redplanemean = 0
     blueplanemean = 0
     greenplanemean = 0
-    # Encontrar las medias de cada plano por medio del siguiente bucle for
+    # Encontrar el promedio de cada plano por medio del siguiente bucle for
     for i in range(3):
         mean = 0.0
         if i == 0: # Plano de color rojo
